@@ -1,0 +1,17 @@
+PODS:
+  - GMCAcknowledgements (1.0.0):
+    - MMMarkdown
+  - MMMarkdown (0.3)
+
+DEPENDENCIES:
+  - GMCAcknowledgements (from `..`)
+
+EXTERNAL SOURCES:
+  GMCAcknowledgements:
+    :path: ..
+
+SPEC CHECKSUMS:
+  GMCAcknowledgements: 4d9c0dcb8504a36810424de8553bfb8440f8d6b8
+  MMMarkdown: 95af8920c647512d1efa2ac8ac1932baf3266e2c
+
+COCOAPODS: 0.33.1
