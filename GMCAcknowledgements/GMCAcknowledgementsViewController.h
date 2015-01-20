@@ -22,4 +22,6 @@
 
 @interface GMCAcknowledgementsViewController : UIViewController
 
+@property (nonatomic) BOOL inverted;
+
 @end

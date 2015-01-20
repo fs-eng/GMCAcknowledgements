@@ -26,6 +26,7 @@
 @interface GMCAcknowledgementsViewController ()
 
 @property (nonatomic, strong) UIWebView *webView;
+@property (nonatomic, strong) NSString *HTML;
 
 @end
 
@@ -65,9 +66,25 @@
     NSString *acknowledgementsMarkdown = [NSString stringWithContentsOfURL:acknowledgementsURL encoding:NSUTF8StringEncoding error:NULL];
     NSString *acknowledgementsHTML = [MMMarkdown HTMLStringWithMarkdown:acknowledgementsMarkdown error:NULL];
     
-    NSString *HTML = [templateHTML stringByReplacingOccurrencesOfString:@"__ACKNOWLEDGEMENTS__" withString:acknowledgementsHTML];
+    self.HTML = [templateHTML stringByReplacingOccurrencesOfString:@"__ACKNOWLEDGEMENTS__" withString:acknowledgementsHTML];
     
-    [self.webView loadHTMLString:HTML baseURL:nil];
+    [self configureWebView];
+}
+
+- (void)setInverted:(BOOL)inverted {
+    _inverted = inverted;
+    
+    [self configureWebView];
+}
+
+- (void)configureWebView {
+    if (self.inverted) {
+        self.webView.backgroundColor = [UIColor blackColor];
+        NSString *invertedHTML = [self.HTML stringByReplacingOccurrencesOfString:@"<body>" withString:@"<body bgcolor=\"#000000\" text=\"#FFFFFF\">"];
+        [self.webView loadHTMLString:invertedHTML baseURL:nil];
+    } else {
+        [self.webView loadHTMLString:self.HTML baseURL:nil];
+    }
 }
 
 @end
