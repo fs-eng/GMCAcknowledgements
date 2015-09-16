@@ -59,7 +59,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSURL *templateURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"GMCAcknowledgements" ofType:@"html"]];
+    NSURL *templateURL = [NSURL fileURLWithPath:[[NSBundle bundleForClass:[GMCAcknowledgementsViewController class]] pathForResource:@"GMCAcknowledgements" ofType:@"html"]];
     NSString *templateHTML = [NSString stringWithContentsOfURL:templateURL encoding:NSUTF8StringEncoding error:NULL];
     
     NSURL *acknowledgementsURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Acknowledgements" ofType:@"markdown"]];
