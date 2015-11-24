@@ -8,9 +8,11 @@ Pod::Spec.new do |s|
     s.source = { :git => "https://github.com/GalacticMegacorp/GMCAcknowledgements.git", :tag => s.version.to_s }
     s.ios.deployment_target = '6.1'
     s.tvos.deployment_target = '9.0'
-    s.source_files = 'GMCAcknowledgements/*.{h,m}', 'GMCAcknowledgements/*/*.{h,m}'
+    s.source_files = 'GMCAcknowledgements/*.{h,m}'
     s.resources = 'GMCAcknowledgements/Resources/*.{lproj,html}'
     s.requires_arc = true
     s.frameworks = 'UIKit'
     
+    s.ios.dependency 'MMMarkdown'
+    s.tvos.dependency 'MMMarkdown'
 end
