@@ -25,7 +25,7 @@
 
 @interface GMCAcknowledgementsViewController ()
 
-@property (nonatomic, strong) UIWebView *webView;
+@property (nonatomic, strong) UITextView *textView;
 @property (nonatomic, strong) NSString *HTML;
 
 @end
@@ -42,18 +42,9 @@
 - (void)loadView {
     self.view = [[UIView alloc] init];
     
-    self.webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
-    self.webView.dataDetectorTypes = UIDataDetectorTypeNone;
-    self.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [self.view addSubview:self.webView];
-    
-    // Hack to remove the unsightly web view shadows
-    self.webView.backgroundColor = [UIColor whiteColor];
-    for (UIView *subview in self.webView.scrollView.subviews) {
-        if ([subview isKindOfClass:[UIImageView class]]) {
-            subview.hidden = YES;
-        }
-    }
+    self.textView = [[UITextView alloc] initWithFrame:self.view.bounds];
+    self.textView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self.view addSubview:self.textView];
 }
 
 - (void)viewDidLoad {
@@ -68,23 +59,27 @@
     
     self.HTML = [templateHTML stringByReplacingOccurrencesOfString:@"__ACKNOWLEDGEMENTS__" withString:acknowledgementsHTML];
     
-    [self configureWebView];
+    [self configureTextView];
 }
 
 - (void)setInverted:(BOOL)inverted {
     _inverted = inverted;
     
-    [self configureWebView];
+    [self configureTextView];
 }
 
-- (void)configureWebView {
+- (void)configureTextView {
+    NSString *configuredHTML = self.HTML;
+    
     if (self.inverted) {
-        self.webView.backgroundColor = [UIColor blackColor];
-        NSString *invertedHTML = [self.HTML stringByReplacingOccurrencesOfString:@"<body>" withString:@"<body bgcolor=\"#000000\" text=\"#FFFFFF\">"];
-        [self.webView loadHTMLString:invertedHTML baseURL:nil];
+        self.textView.backgroundColor = [UIColor blackColor];
+        configuredHTML = [self.HTML stringByReplacingOccurrencesOfString:@"<body>" withString:@"<body bgcolor=\"#000000\" text=\"#FFFFFF\">"];
     } else {
-        [self.webView loadHTMLString:self.HTML baseURL:nil];
+        self.textView.backgroundColor = [UIColor whiteColor];
     }
+    
+    NSDictionary *options = @{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType};
+    self.textView.attributedText = [[NSAttributedString alloc] initWithData:[configuredHTML dataUsingEncoding:NSUTF8StringEncoding] options:options documentAttributes:nil error:nil];
 }
 
 @end
