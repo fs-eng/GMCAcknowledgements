@@ -34,7 +34,7 @@
 
 - (id)init {
     if ((self = [super init])) {
-        self.title = NSLocalizedStringFromTable(@"Acknowledgements", @"GMCAcknowledgements", nil);
+        self.title = NSLocalizedString(@"Third Party Acknowledgements", nil);
     }
     return self;
 }
@@ -44,6 +44,7 @@
     
     self.textView = [[UITextView alloc] initWithFrame:self.view.bounds];
     self.textView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.textView.editable = NO;
     [self.view addSubview:self.textView];
 }
 
